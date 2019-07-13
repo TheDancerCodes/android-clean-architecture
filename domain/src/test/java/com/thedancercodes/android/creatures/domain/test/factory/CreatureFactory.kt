@@ -21,20 +21,21 @@ class CreatureFactory {
 
     private fun makeCreature() = Creature(randomLong(), randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid())
 
-    // TODO
-//    fun makeJupiterCreatureList(count: Int): List<Creature> {
-//      val creatures = mutableListOf<Creature>()
-//      repeat(count) {
-//        creatures.add(makeJupiterCreature())
-//      }
-//      return creatures
-//    }
-//
-//    private fun makeJupiterCreature() = Creature(randomLong(),
-//        randomUuid(),
-//        randomUuid(),
-//        randomUuid(),
-//        randomUuid(),
-//        "Jupiter")
+    // Calls into the makeJupiterCreature method and creates a list of creatures
+    fun makeJupiterCreatureList(count: Int): List<Creature> {
+      val creatures = mutableListOf<Creature>()
+      repeat(count) {
+        creatures.add(makeJupiterCreature())
+      }
+      return creatures
+    }
+
+    // Creates a model object Creature
+    private fun makeJupiterCreature() = Creature(randomLong(),
+        randomUuid(),
+        randomUuid(),
+        randomUuid(),
+        randomUuid(),
+        "Jupiter")
   }
 }

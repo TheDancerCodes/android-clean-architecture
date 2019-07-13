@@ -13,5 +13,5 @@ interface CreatureRepository {
   fun clearCreatures(): Completable
   fun saveCreatures(creatures: List<Creature>): Completable
   fun getCreatures(): Flowable<List<Creature>>
-  // TODO: getJupiterCreatures
+  fun getJupiterCreatures(): Flowable<List<Creature>>
 }
