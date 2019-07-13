@@ -44,5 +44,14 @@ class CreatureDataRepository @Inject constructor(private val factory: CreatureDa
         }
   }
 
-  // TODO: getJupiterCreatures
+    /*
+      We call getJupiterCreatures() from the domain layer &
+      This is the implementation of the method in the data layer
+    */
+    override fun getJupiterCreatures(): Flowable<List<Creature>> =
+
+        // Get all creatures and filter down to those from Jupiter
+        getCreatures().flatMap {
+            Flowable.just(it.filter { it.planet == "Jupiter"} )
+        }
 }

@@ -124,7 +124,28 @@ class CreatureDataRepositoryTest {
     verify(creatureRemoteDataStore, never()).saveCreatures(any())
   }
 
-  // TODO: Add getJupiterCreaturesReturnsData
+  @Test
+  fun getJupiterCreaturesReturnsData() {
+
+    // Stub data
+    stubCreatureCacheDataStoreIsCached(Single.just(true))
+    stubCreatureDataStoreFactoryRetrieveDataStore(creatureCacheDataStore)
+    stubCreatureCacheSaveCreatures(Completable.complete())
+
+    val creatures = CreatureEntityFactory.makeJupiterCreatureList(4)
+    val creatureEntities = CreatureEntityFactory.makeJupiterCreatureEntityList(4)
+
+    creatures.forEachIndexed { index, creature ->
+
+      // Takes CreatureEntity from the data layer and turning it into a creature
+      stubCreatureMapperMapFromEntity(creatureEntities[index], creature)
+    }
+
+    stubCreatureCacheDataStoreGetCreatures(Flowable.just(creatureEntities))
+
+    val testObserver = creatureDataRepository.getJupiterCreatures().test()
+    testObserver.assertValue(creatures.filter { it.planet == "Jupiter" })
+  }
 
   private fun stubCreatureCacheSaveCreatures(completable: Completable) {
     whenever(creatureCacheDataStore.saveCreatures(any()))
