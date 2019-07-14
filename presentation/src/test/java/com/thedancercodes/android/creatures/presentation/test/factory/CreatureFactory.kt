@@ -37,31 +37,30 @@ class CreatureFactory {
       return CreatureView(randomUuid(), randomUuid(), randomUuid(), randomUuid(), randomUuid())
     }
 
-    // TODO
-//    fun makeJupiterCreatureList(count: Int): List<Creature> {
-//      val creatures = mutableListOf<Creature>()
-//      repeat(count) {
-//        creatures.add(makeJupiterCreature())
-//      }
-//      return creatures
-//    }
-//
-//    private fun makeJupiterCreature(): Creature =
-//        Creature(randomLong(), randomUuid(), randomUuid(),
-//            randomUuid(), randomUuid(), "Jupiter")
-//
-//    fun makeJupiterCreatureViewList(count: Int):
-//        List<CreatureView> {
-//
-//      val creatures = mutableListOf<CreatureView>()
-//      repeat(count) {
-//        creatures.add(makeJupiterCreatureView())
-//      }
-//      return creatures
-//    }
-//
-//    private fun makeJupiterCreatureView(): CreatureView =
-//        CreatureView(randomUuid(), randomUuid(), randomUuid(),
-//            randomUuid(), "Jupiter")
+    fun makeJupiterCreatureList(count: Int): List<Creature> {
+      val creatures = mutableListOf<Creature>()
+      repeat(count) {
+        creatures.add(makeJupiterCreature())
+      }
+      return creatures
+    }
+
+    private fun makeJupiterCreature(): Creature =
+        Creature(randomLong(), randomUuid(), randomUuid(),
+            randomUuid(), randomUuid(), "Jupiter")
+
+    fun makeJupiterCreatureViewList(count: Int):
+        List<CreatureView> {
+
+      val creatures = mutableListOf<CreatureView>()
+      repeat(count) {
+        creatures.add(makeJupiterCreatureView())
+      }
+      return creatures
+    }
+
+    private fun makeJupiterCreatureView(): CreatureView =
+        CreatureView(randomUuid(), randomUuid(), randomUuid(),
+            randomUuid(), "Jupiter")
   }
 }

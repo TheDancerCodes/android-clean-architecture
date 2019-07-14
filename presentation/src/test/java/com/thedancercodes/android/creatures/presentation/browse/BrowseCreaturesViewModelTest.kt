@@ -3,6 +3,7 @@ package com.thedancercodes.android.creatures.presentation.browse
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.nhaarman.mockito_kotlin.*
 import com.thedancercodes.android.creatures.domain.interactor.browse.GetCreatures
+import com.thedancercodes.android.creatures.domain.interactor.browse.GetJupiterCreatures
 import com.thedancercodes.android.creatures.domain.model.Creature
 import com.thedancercodes.android.creatures.presentation.data.ResourceState
 import com.thedancercodes.android.creatures.presentation.mapper.CreatureMapper
@@ -25,7 +26,7 @@ class BrowseCreaturesViewModelTest {
   var instantTaskExecutorRule = InstantTaskExecutorRule()
 
   @Mock private lateinit var getCreatures: GetCreatures
-  // TODO: Add GetJupiterCreatures mock
+  @Mock private lateinit var getJupiter: GetJupiterCreatures
   @Mock private lateinit var creatureMapper: CreatureMapper
 
   @Captor
@@ -37,9 +38,9 @@ class BrowseCreaturesViewModelTest {
   fun setUp() {
     captor = argumentCaptor()
     getCreatures = mock()
-    // TODO: Add getJupiter mock
+    getJupiter = mock()
     creatureMapper = mock()
-    creaturesViewModel = BrowseCreaturesViewModel(getCreatures, creatureMapper)
+    creaturesViewModel = BrowseCreaturesViewModel(getCreatures, getJupiter, creatureMapper)
   }
 
   @Test
@@ -148,23 +149,26 @@ class BrowseCreaturesViewModelTest {
     assert(creaturesViewModel.getCreatures().value?.data == null)
   }
 
-  // TODO
-//  @Test
-//  fun getJupiterReturnsDataOnSuccess() {
-//    val list = CreatureFactory.makeJupiterCreatureList(2)
-//    val viewList = CreatureFactory.makeJupiterCreatureViewList(2)
-//
-//    stubCreatureMapperMapToView(viewList[0], list[0])
-//    stubCreatureMapperMapToView(viewList[1], list[1])
-//
-//    creaturesViewModel.getJupiter()
-//
-//    verify(getJupiter).execute(captor.capture(), eq(null))
-//    captor.firstValue.onNext(list)
-//
-//    assert(
-//        creaturesViewModel.getJupiter().value?.data == viewList)
-//  }
+  @Test
+  fun getJupiterReturnsDataOnSuccess() {
+
+    val list = CreatureFactory.makeJupiterCreatureList(2)
+    val viewList = CreatureFactory.makeJupiterCreatureViewList(2)
+
+    // Stubbing out our data
+    stubCreatureMapperMapToView(viewList[0], list[0])
+    stubCreatureMapperMapToView(viewList[1], list[1])
+
+    // Calling into our ViewModel
+    creaturesViewModel.getJupiter()
+
+    // Verify that the data that comes back for the list matches what we expect it to be
+    verify(getJupiter).execute(captor.capture(), eq(null))
+    captor.firstValue.onNext(list)
+
+    assert(
+        creaturesViewModel.getJupiter().value?.data == viewList)
+  }
 
   private fun stubCreatureMapperMapToView(creatureView: CreatureView,
                                           creature: Creature) {
