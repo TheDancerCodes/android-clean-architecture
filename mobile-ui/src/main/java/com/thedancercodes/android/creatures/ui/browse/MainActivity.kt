@@ -50,13 +50,37 @@ class MainActivity : AppCompatActivity() {
     val id = item.itemId
     when (id) {
       R.id.action_show_all_creatures -> {
-        // TODO: Replace Toast
-        Toast.makeText(this, "Show All clicked", Toast.LENGTH_SHORT).show()
+
+        /*
+          [1] Call the ViewModel
+          [2] Get the creatures
+          [3] Observe whats coming back
+          [4] Once we get the data back, share it with the user
+       */
+        browseCreaturesViewModel.getCreatures().observe( this,
+                Observer<Resource<List<CreatureView>>> {
+                  if (it != null) {
+                    this.handleDataState(it.status, it.data, it.message)
+                  }
+                }
+        )
         return true
       }
       R.id.action_show_jupiter_creatures -> {
-        // TODO: Replace Toast
-        Toast.makeText(this, "Show Jupiter clicked", Toast.LENGTH_SHORT).show()
+
+        /*
+           [1] Call the ViewModel
+           [2] Get the creatures
+           [3] Observe whats coming back
+           [4] Once we get the data back, share it with the user
+        */
+        browseCreaturesViewModel.getJupiter().observe( this,
+                Observer<Resource<List<CreatureView>>> {
+                  if (it != null) {
+                    this.handleDataState(it.status, it.data, it.message)
+                  }
+                }
+        )
         return true
       }
     }
